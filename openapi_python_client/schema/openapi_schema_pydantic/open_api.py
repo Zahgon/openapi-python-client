@@ -37,11 +37,4 @@ class OpenAPI(BaseModel):
     @classmethod
     def check_openapi_version(cls, value: str) -> str:
         """Validates that the declared OpenAPI version is a supported one"""
-        parts = value.split(".")
-        if len(parts) != NUM_SEMVER_PARTS:
-            raise ValueError(f"Invalid OpenAPI version {value}")
-        if parts[0] != "3":
-            raise ValueError(f"Only OpenAPI versions 3.* are supported, got {value}")
-        if int(parts[1]) > 1:
-            raise ValueError(f"Only OpenAPI versions 3.1.* are supported, got {value}")
-        return value
+        pass

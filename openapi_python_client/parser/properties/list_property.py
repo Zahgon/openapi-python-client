@@ -113,7 +113,7 @@ class ListProperty(PropertyProtocol):
 
     def get_instance_type_string(self) -> str:
         """Get a string representation of runtime type that should be used for `isinstance` checks"""
-        return "list"
+        pass
 
     def get_imports(self, *, prefix: str) -> set[str]:
         """

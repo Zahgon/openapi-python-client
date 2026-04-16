@@ -50,14 +50,7 @@ class ConfigFile(BaseModel):
     @staticmethod
     def load_from_path(path: Path) -> "ConfigFile":
         """Creates a Config from provided JSON or YAML file and sets a bunch of globals from it"""
-        mime = mimetypes.guess_type(path.absolute().as_uri(), strict=True)[0]
-        if mime == "application/json":
-            config_data = json.loads(path.read_text())
-        else:
-            yaml = YAML(typ="safe")
-            config_data = yaml.load(path)
-        config = ConfigFile(**config_data)
-        return config
+        pass
 
 
 @define
@@ -91,36 +84,4 @@ class Config:
         overwrite: bool,
         output_path: Path | None,
     ) -> "Config":
-        if config_file.post_hooks is not None:
-            post_hooks = config_file.post_hooks
-        elif meta_type == MetaType.NONE:
-            post_hooks = [
-                "ruff check . --fix-only --extend-select=I",
-                "ruff format .",
-            ]
-        else:
-            post_hooks = [
-                "ruff check --fix-only .",
-                "ruff format .",
-            ]
-
-        config = Config(
-            meta_type=meta_type,
-            class_overrides=config_file.class_overrides or {},
-            content_type_overrides=config_file.content_type_overrides or {},
-            project_name_override=config_file.project_name_override,
-            package_name_override=config_file.package_name_override,
-            package_version_override=config_file.package_version_override,
-            use_path_prefixes_for_title_model_names=config_file.use_path_prefixes_for_title_model_names,
-            post_hooks=post_hooks,
-            docstrings_on_attributes=config_file.docstrings_on_attributes,
-            field_prefix=config_file.field_prefix,
-            generate_all_tags=config_file.generate_all_tags,
-            http_timeout=config_file.http_timeout,
-            literal_enums=config_file.literal_enums,
-            document_source=document_source,
-            file_encoding=file_encoding,
-            overwrite=overwrite,
-            output_path=output_path,
-        )
-        return config
+        pass

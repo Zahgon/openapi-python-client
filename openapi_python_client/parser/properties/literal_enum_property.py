@@ -167,7 +167,7 @@ class LiteralEnumProperty(PropertyProtocol):
         return self.value_type.__name__
 
     def get_instance_type_string(self) -> str:
-        return self.value_type.__name__
+        pass
 
     def get_imports(self, *, prefix: str) -> set[str]:
         """

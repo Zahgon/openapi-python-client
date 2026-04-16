@@ -71,9 +71,7 @@ def fix_reserved_words(value: str) -> str:
     Returns:
         `value` suffixed with `_` if it was a reserved word.
     """
-    if value in RESERVED_WORDS or iskeyword(value):
-        return f"{value}_"
-    return value
+    pass
 
 
 def snake_case(value: str) -> str:
@@ -91,8 +89,7 @@ def pascal_case(value: str) -> str:
 
 def kebab_case(value: str) -> str:
     """Converts to kebab-case"""
-    words = split_words(sanitize(value))
-    return "-".join(words).lower()
+    pass
 
 
 def remove_string_escapes(value: str) -> str:

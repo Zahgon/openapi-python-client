@@ -119,7 +119,7 @@ class PropertyProtocol(Protocol):
 
     def get_instance_type_string(self) -> str:
         """Get a string representation of runtime type that should be used for `isinstance` checks"""
-        return self.get_type_string(no_optional=True)
+        pass
 
     # noinspection PyUnusedLocal
     def get_imports(self, *, prefix: str) -> set[str]:
@@ -146,23 +146,8 @@ class PropertyProtocol(Protocol):
 
     def to_string(self) -> str:
         """How this should be declared in a dataclass"""
-        default: str | None
-        if self.default is not None:
-            default = self.default.python_code
-        elif not self.required:
-            default = "UNSET"
-        else:
-            default = None
-
-        if default is not None:
-            return f"{self.python_name}: {self.get_type_string()} = {default}"
-        return f"{self.python_name}: {self.get_type_string()}"
+        pass
 
     def to_docstring(self) -> str:
         """Returns property docstring"""
-        doc = f"{self.python_name} ({self.get_type_string()}): {self.description or ''}"
-        if self.default:
-            doc += f" Default: {self.default.python_code}."
-        if self.example:
-            doc += f" Example: {self.example}."
-        return doc
+        pass

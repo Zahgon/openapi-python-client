@@ -81,7 +81,7 @@ class HTTPStatusPattern:
 
     def is_range(self) -> bool:
         """Check if this is a range of status codes, such as 2XX"""
-        return self.range is not None and self.range[0] != self.range[1]
+        pass
 
     def __lt__(self, other: "HTTPStatusPattern") -> bool:
         """Compare two HTTPStatusPattern objects based on the order they should be applied in"""

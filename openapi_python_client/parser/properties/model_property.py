@@ -138,7 +138,7 @@ class ModelProperty(PropertyProtocol):
     @property
     def self_import(self) -> str:
         """Constructs a self import statement from this ModelProperty's attributes"""
-        return f"models.{self.class_info.module_name} import {self.class_info.name}"
+        pass
 
     def get_base_type_string(self) -> str:
         return self.class_info.name

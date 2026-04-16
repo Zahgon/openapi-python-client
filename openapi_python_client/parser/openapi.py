@@ -469,12 +469,7 @@ class Endpoint:
 
     def response_type(self) -> str:
         """Get the Python type of any response from this endpoint"""
-        types = sorted({response.prop.get_type_string() for response in self.responses})
-        if len(types) == 0:
-            return "Any"
-        if len(types) == 1:
-            return types[0]
-        return " | ".join(types)
+        pass
 
     def iter_all_parameters(self) -> Iterator[tuple[oai.ParameterLocation, Property]]:
         """Iterate through all the parameters of this endpoint"""
@@ -485,13 +480,7 @@ class Endpoint:
 
     def list_all_parameters(self) -> list[Property]:
         """Return a list of all the parameters of this endpoint"""
-        return (
-            self.path_parameters
-            + self.query_parameters
-            + self.header_parameters
-            + self.cookie_parameters
-            + [body.prop for body in self.bodies]
-        )
+        pass
 
 
 @dataclass

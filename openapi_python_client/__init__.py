@@ -294,17 +294,7 @@ def _get_project_for_url_or_path(
     config: Config,
     custom_template_path: Path | None = None,
 ) -> Project | GeneratorError:
-    data_dict = _get_document(source=config.document_source, timeout=config.http_timeout)
-    if isinstance(data_dict, GeneratorError):
-        return data_dict
-    openapi = GeneratorData.from_dict(data_dict, config=config)
-    if isinstance(openapi, GeneratorError):
-        return openapi
-    return Project(
-        openapi=openapi,
-        custom_template_path=custom_template_path,
-        config=config,
-    )
+    pass
 
 
 def generate(
@@ -318,45 +308,12 @@ def generate(
     Returns:
          A list containing any errors encountered when generating.
     """
-    project = _get_project_for_url_or_path(
-        custom_template_path=custom_template_path,
-        config=config,
-    )
-    if isinstance(project, GeneratorError):
-        return [project]
-    return project.build()
+    pass
 
 
 def _load_yaml_or_json(data: bytes, content_type: str | None) -> dict[str, Any] | GeneratorError:
-    if content_type == "application/json":
-        try:
-            return json.loads(data.decode())
-        except ValueError as err:
-            return GeneratorError(header=f"Invalid JSON from provided source: {err}")
-    else:
-        try:
-            yaml = YAML(typ="safe")
-            return yaml.load(data)
-        except YAMLError as err:
-            return GeneratorError(header=f"Invalid YAML from provided source: {err}")
+    pass
 
 
 def _get_document(*, source: str | Path, timeout: int) -> dict[str, Any] | GeneratorError:
-    yaml_bytes: bytes
-    content_type: str | None
-    if isinstance(source, str):
-        try:
-            response = httpx.get(source, timeout=timeout)
-            yaml_bytes = response.content
-            if "content-type" in response.headers:
-                content_type = response.headers["content-type"].split(";")[0]
-            else:  # pragma: no cover
-                content_type = mimetypes.guess_type(source, strict=True)[0]
-
-        except (httpx.HTTPError, httpcore.NetworkError):
-            return GeneratorError(header="Could not get OpenAPI document from provided URL")
-    else:
-        yaml_bytes = source.read_bytes()
-        content_type = mimetypes.guess_type(source.absolute().as_uri(), strict=True)[0]
-
-    return _load_yaml_or_json(yaml_bytes, content_type)
+    pass

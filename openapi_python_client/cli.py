@@ -13,9 +13,7 @@ app = typer.Typer(name="openapi-python-client")
 
 
 def _version_callback(value: bool) -> None:
-    if value:
-        typer.echo(f"openapi-python-client version: {__version__}")
-        raise typer.Exit()
+    pass
 
 
 def _process_config(
@@ -28,33 +26,7 @@ def _process_config(
     overwrite: bool,
     output_path: Path | None,
 ) -> Config:
-    source: Path | str
-    if url and not path:
-        source = url
-    elif path and not url:
-        source = path
-    elif url and path:
-        typer.secho("Provide either --url or --path, not both", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
-    else:
-        typer.secho("You must either provide --url or --path", fg=typer.colors.RED)
-        raise typer.Exit(code=1)
-
-    try:
-        codecs.getencoder(file_encoding)
-    except LookupError as err:
-        typer.secho(f"Unknown encoding : {file_encoding}", fg=typer.colors.RED)
-        raise typer.Exit(code=1) from err
-
-    if not config_path:
-        config_file = ConfigFile()
-    else:
-        try:
-            config_file = ConfigFile.load_from_path(path=config_path)
-        except Exception as err:
-            raise typer.BadParameter("Unable to parse config") from err
-
-    return Config.from_sources(config_file, meta_type, source, file_encoding, overwrite, output_path=output_path)
+    pass
 
 
 # noinspection PyUnusedLocal
@@ -68,58 +40,12 @@ def cli(
 
 
 def _print_parser_error(err: GeneratorError, color: str) -> None:
-    typer.secho(err.header, bold=True, fg=color, err=True)
-    typer.echo(err=True)
-    if err.detail:
-        typer.secho(err.detail, fg=color, err=True)
-        typer.echo(err=True)
-
-    if isinstance(err, ParseError) and err.data is not None:
-        formatted_data = pformat(err.data)
-        typer.secho(formatted_data, fg=color, err=True)
-
-    typer.echo(err=True)
+    pass
 
 
 def handle_errors(errors: Sequence[GeneratorError], fail_on_warning: bool = False) -> None:
     """Turn custom errors into formatted error messages"""
-    if len(errors) == 0:
-        return
-    error_level = ErrorLevel.WARNING
-    message = "Warning(s) encountered while generating. Client was generated, but some pieces may be missing"
-    header_color = typer.colors.BRIGHT_YELLOW
-    color = typer.colors.YELLOW
-    for error in errors:
-        if error.level == ErrorLevel.ERROR:
-            error_level = ErrorLevel.ERROR
-            message = "Error(s) encountered while generating, client was not created"
-            color = typer.colors.RED
-            header_color = typer.colors.BRIGHT_RED
-            break
-    typer.secho(
-        message,
-        underline=True,
-        bold=True,
-        fg=header_color,
-        err=True,
-    )
-    typer.echo()
-
-    for err in errors:
-        _print_parser_error(err, color)
-
-    gh_link = typer.style(
-        "https://github.com/openapi-generators/openapi-python-client/issues/new/choose", fg=typer.colors.BRIGHT_BLUE
-    )
-    typer.secho(
-        f"If you believe this was a mistake or this tool is missing a feature you need, "
-        f"please open an issue at {gh_link}",
-        fg=typer.colors.BLUE,
-        err=True,
-    )
-
-    if error_level == ErrorLevel.ERROR or fail_on_warning:
-        raise typer.Exit(code=1)
+    pass
 
 
 @app.command()
@@ -150,19 +76,4 @@ def generate(
     ),
 ) -> None:
     """Generate a new OpenAPI Client library"""
-    from . import generate  # noqa: PLC0415
-
-    config = _process_config(
-        url=url,
-        path=path,
-        config_path=config_path,
-        meta_type=meta,
-        file_encoding=file_encoding,
-        overwrite=overwrite,
-        output_path=output_path,
-    )
-    errors = generate(
-        custom_template_path=custom_template_path,
-        config=config,
-    )
-    handle_errors(errors, fail_on_warning)
+    pass

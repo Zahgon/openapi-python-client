@@ -166,43 +166,9 @@ class Schema(BaseModel):
         """
         Convert exclusiveMinimum/exclusiveMaximum between OpenAPI v3.0 (bool) and v3.1 (numeric).
         """
-        # Handle exclusiveMinimum
-        if isinstance(self.exclusiveMinimum, bool) and self.minimum is not None:
-            if self.exclusiveMinimum:
-                self.exclusiveMinimum = self.minimum
-                self.minimum = None
-            else:
-                self.exclusiveMinimum = None
-        elif isinstance(self.exclusiveMinimum, float):
-            self.minimum = None
-
-        # Handle exclusiveMaximum
-        if isinstance(self.exclusiveMaximum, bool) and self.maximum is not None:
-            if self.exclusiveMaximum:
-                self.exclusiveMaximum = self.maximum
-                self.maximum = None
-            else:
-                self.exclusiveMaximum = None
-        elif isinstance(self.exclusiveMaximum, float):
-            self.maximum = None
-
-        return self
+        pass
 
     @model_validator(mode="after")
     def handle_nullable(self) -> "Schema":
         """Convert the old 3.0 `nullable` property into the new 3.1 style"""
-        if not self.nullable:
-            return self
-        if isinstance(self.type, str):
-            self.type = [self.type, DataType.NULL]
-        elif isinstance(self.type, list):
-            if DataType.NULL not in self.type:
-                self.type.append(DataType.NULL)
-        elif len(self.oneOf) > 0:
-            self.oneOf.append(Schema(type=DataType.NULL))
-        elif len(self.anyOf) > 0:
-            self.anyOf.append(Schema(type=DataType.NULL))
-        elif len(self.allOf) > 0:  # Nullable allOf is basically oneOf[null, allOf]
-            self.oneOf = [Schema(type=DataType.NULL), Schema(allOf=self.allOf)]
-            self.allOf = []
-        return self
+        pass
