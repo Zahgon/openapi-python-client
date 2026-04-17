@@ -32,7 +32,9 @@ T = TypeVar("T")
 
 
 def _reference_discriminator(obj: Any) -> Literal["ref", "other"]:
-    pass
+    if isinstance(obj, dict):
+        return "ref" if "$ref" in obj else "other"
+    return "ref" if isinstance(obj, Reference) else "other"
 
 
 ReferenceOr: TypeAlias = Annotated[

@@ -71,7 +71,9 @@ def fix_reserved_words(value: str) -> str:
     Returns:
         `value` suffixed with `_` if it was a reserved word.
     """
-    pass
+    if value in RESERVED_WORDS or iskeyword(value):
+        return f"{value}_"
+    return value
 
 
 def snake_case(value: str) -> str:
